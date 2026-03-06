@@ -144,15 +144,17 @@ class MosaicOverlayView @JvmOverloads constructor(
         val right = mosaicRect.right.toInt()
         val bottom = mosaicRect.bottom.toInt()
 
-        // 马赛克渲染：在矩形内绘制交替深浅的方块，模拟马赛克效果
+        // 柔和磨砂遮挡：半透明深灰带轻微明暗变化，避免突兀的硬马赛克
         var y = top
         var row = 0
         while (y < bottom) {
             var x = left
             var col = 0
             while (x < right) {
-                val shade = ((row + col) % 2) * 0.15f + 0.7f
-                mosaicPaint.color = (0xFF * shade).toInt() shl 24 or 0x808080
+                // alpha 在 0x80~0xA0 之间轻微变化，颜色为深灰，略微透出底层视频
+                val shade = 0x80 + ((row + col) % 3) * 0x10
+                val alpha = shade.coerceIn(0x60, 0xA0)
+                mosaicPaint.color = (alpha shl 24) or 0x333333
                 canvas.drawRect(
                     x.toFloat(),
                     y.toFloat(),
@@ -220,6 +222,8 @@ class MosaicOverlayView @JvmOverloads constructor(
                     val dx = px - lastTouchX
                     val dy = py - lastTouchY
                     mosaicRect.offset(dx, dy)
+                    // 拖动后限制在屏幕内，避免拖出屏幕无法再操作
+                    constrainRectInsideView()
                     lastTouchX = px
                     lastTouchY = py
                     invalidate()
@@ -239,6 +243,8 @@ class MosaicOverlayView @JvmOverloads constructor(
                             cx + w / 2,
                             cy + h / 2
                         )
+                        // 缩放后同样限制在屏幕内
+                        constrainRectInsideView()
                         lastDist = newDist
                         invalidate()
                     }
@@ -261,5 +267,28 @@ class MosaicOverlayView @JvmOverloads constructor(
         val x = e.getX(0) - e.getX(1)
         val y = e.getY(0) - e.getY(1)
         return sqrt(x * x + y * y)
+    }
+
+    /**
+     * 将马赛克矩形约束在当前视图范围内，避免拖动/缩放后跑到屏幕外
+     */
+    private fun constrainRectInsideView() {
+        val vw = width.toFloat().takeIf { it > 0 } ?: return
+        val vh = height.toFloat().takeIf { it > 0 } ?: return
+        val rectW = mosaicRect.width().coerceAtLeast(minSize)
+        val rectH = mosaicRect.height().coerceAtLeast(minSize)
+
+        val maxLeft = max(0f, vw - rectW)
+        val maxTop = max(0f, vh - rectH)
+
+        val newLeft = mosaicRect.left.coerceIn(0f, maxLeft)
+        val newTop = mosaicRect.top.coerceIn(0f, maxTop)
+
+        mosaicRect.set(
+            newLeft,
+            newTop,
+            newLeft + rectW,
+            newTop + rectH
+        )
     }
 }
