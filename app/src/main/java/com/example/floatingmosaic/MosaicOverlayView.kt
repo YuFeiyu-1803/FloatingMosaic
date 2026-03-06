@@ -59,8 +59,8 @@ class MosaicOverlayView @JvmOverloads constructor(
         resources.displayMetrics.widthPixels.toFloat(),
         resources.displayMetrics.heightPixels.toFloat()
     )
-    private var lastWidth = 0
-    private var lastHeight = 0
+    private var lastViewWidth = 0
+    private var lastViewHeight = 0
 
     var onConfigChangedListener: (() -> Unit)? = null
 
@@ -91,8 +91,8 @@ class MosaicOverlayView @JvmOverloads constructor(
             invalidate()
             onConfigChangedListener?.invoke()
         }
-        lastWidth = w
-        lastHeight = h
+        lastViewWidth = w
+        lastViewHeight = h
     }
 
     /**
