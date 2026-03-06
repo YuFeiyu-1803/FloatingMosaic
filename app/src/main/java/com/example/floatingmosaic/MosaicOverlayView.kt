@@ -64,10 +64,6 @@ class MosaicOverlayView @JvmOverloads constructor(
 
     var onConfigChangedListener: (() -> Unit)? = null
 
-    fun setOnConfigChangedListener(listener: (() -> Unit)?) {
-        onConfigChangedListener = listener
-    }
-
     init {
         setWillNotDraw(false)
         isClickable = false

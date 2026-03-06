@@ -177,10 +177,17 @@ class FloatService : Service() {
             val defSize = (200 * resources.displayMetrics.density).toInt()
             val left = (screenWidth - defSize) / 2
             val top = (screenHeight - defSize) / 2
-            mosaic.setMosaicRect(android.graphics.RectF(left.toFloat(), top.toFloat(), (left + defSize).toFloat(), (top + defSize).toFloat()))
+            mosaic.setMosaicRect(
+                android.graphics.RectF(
+                    left.toFloat(),
+                    top.toFloat(),
+                    (left + defSize).toFloat(),
+                    (top + defSize).toFloat()
+                )
+            )
         }
 
-        mosaic.setOnConfigChangedListener {
+        mosaic.onConfigChangedListener = {
             PrefsManager.saveMosaicRect(this@FloatService, mosaic.getMosaicRect())
             PrefsManager.saveGranularity(this@FloatService, mosaic.getGranularity())
             PrefsManager.saveMosaicVisible(this@FloatService, mosaic.isMosaicVisible())

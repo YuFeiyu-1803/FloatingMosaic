@@ -1,7 +1,6 @@
 package com.example.floatingmosaic
 
 import android.content.Context
-import android.graphics.Rect
 import android.graphics.RectF
 
 /**
