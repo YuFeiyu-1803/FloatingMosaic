@@ -27,10 +27,10 @@ jobs:
 
       - name: 生成 Gradle Wrapper
         run: |
-          curl -sL https://services.gradle.org/distributions/gradle-8.1.1-bin.zip -o gradle.zip
+          curl -sL https://services.gradle.org/distributions/gradle-8.2-bin.zip -o gradle.zip
           unzip -q gradle.zip
-          chmod +x gradle-8.1.1/bin/gradle
-          ./gradle-8.1.1/bin/gradle wrapper --gradle-version 8.1.1
+          chmod +x gradle-8.2/bin/gradle
+          ./gradle-8.2/bin/gradle wrapper --gradle-version 8.2
 
       - name: 缓存 Gradle
         uses: gradle/gradle-build-action@v3
