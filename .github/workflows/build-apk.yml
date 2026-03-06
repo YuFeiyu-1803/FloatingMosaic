@@ -23,7 +23,7 @@ jobs:
       - name: 配置 Android SDK
         uses: android-actions/setup-android@v3
         with:
-          packages: 'tools platform-tools platform;android-34 build-tools;34.0.0'
+          packages: 'tools platform-tools platforms;android-34 build-tools;34.0.0'
 
       - name: 生成 Gradle Wrapper
         run: |
