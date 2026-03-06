@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  悬浮马赛克应用 - 权限声明
+  仅申请 SYSTEM_ALERT_WINDOW 悬浮窗权限，无其他任何权限
+  无摄像头、麦克风、存储、定位、通讯录等
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- 唯一权限：悬浮窗，用于在屏幕顶层显示马赛克遮罩 -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <application
+        android:name=".MosaicApplication"
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.FloatingMosaic"
+        tools:targetApi="34">
+
+        <!-- 主入口：权限检测与引导 -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.FloatingMosaic"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 悬浮窗服务：常驻后台，管理悬浮球和马赛克 -->
+        <!-- 悬浮窗服务：普通服务，通过 WindowManager 保持窗口显示 -->
+        <service
+            android:name=".FloatService"
+            android:exported="false" />
+    </application>
+</manifest>

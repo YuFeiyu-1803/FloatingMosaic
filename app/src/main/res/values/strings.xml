@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">悬浮马赛克</string>
+    <string name="permission_title">需要悬浮窗权限</string>
+    <string name="permission_desc">为了在屏幕顶层显示马赛克遮罩，需要开启悬浮窗权限。请在设置中允许本应用显示在其他应用上层。</string>
+    <string name="open_settings">去设置</string>
+    <string name="start_float">开启悬浮窗</string>
+    <string name="granularity">马赛克粒度</string>
+    <string name="granularity_fine">细</string>
+    <string name="granularity_medium">中</string>
+    <string name="granularity_coarse">粗</string>
+    <string name="hide_mosaic">隐藏马赛克</string>
+    <string name="show_mosaic">显示马赛克</string>
+    <string name="exit_app">退出应用</string>
+</resources>
