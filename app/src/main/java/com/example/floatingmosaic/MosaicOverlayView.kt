@@ -64,6 +64,10 @@ class MosaicOverlayView @JvmOverloads constructor(
 
     var onConfigChangedListener: (() -> Unit)? = null
 
+    fun setOnConfigChangedListener(listener: (() -> Unit)?) {
+        onConfigChangedListener = listener
+    }
+
     init {
         setWillNotDraw(false)
         isClickable = false
@@ -81,9 +85,11 @@ class MosaicOverlayView @JvmOverloads constructor(
                 mosaicRect.right * scaleX,
                 mosaicRect.bottom * scaleY
             )
+            val maxRight = w - minSize
+            val maxBottom = h - minSize
             mosaicRect.set(
-                mosaicRect.left.coerceIn(0f, w - minSize),
-                mosaicRect.top.coerceIn(0f, h - minSize),
+                mosaicRect.left.coerceIn(0f, max(0f, maxRight)),
+                mosaicRect.top.coerceIn(0f, max(0f, maxBottom)),
                 mosaicRect.right.coerceIn(minSize, w.toFloat()),
                 mosaicRect.bottom.coerceIn(minSize, h.toFloat())
             )
